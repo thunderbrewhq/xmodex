@@ -1,0 +1,31 @@
+#ifndef XMODEX_DSP_CONNECTION_REQUEST_HPP
+#define XMODEX_DSP_CONNECTION_REQUEST_HPP
+
+#include "xmodex/LinkedListNode.hpp"
+
+#define FMOD_DSP_CONNECTION_REQUEST_MAX 1024
+
+namespace FMOD {
+
+class DSPI;
+class DSPConnection;
+
+enum FMOD_DSPCONNECTIONREQUEST_CMD {
+    DSPCONNECTION_REQUEST_ADDINPUT,
+    DSPCONNECTION_REQUEST_DISCONNECTFROM,
+    DSPCONNECTION_REQUEST_DISCONNECTALLINPUTS,
+    DSPCONNECTION_REQUEST_DISCONNECTALLOUTPUTS,
+    DSPCONNECTION_REQUEST_DISCONNECTALL
+};
+
+class DSPConnectionRequest : public LinkedListNode {
+    public:
+        DSPI* mThis;
+        DSPI* mTarget;
+        DSPConnection* mConnection;
+        FMOD_DSPCONNECTIONREQUEST_CMD mRequest;
+};
+
+} // namespace FMOD
+
+#endif
