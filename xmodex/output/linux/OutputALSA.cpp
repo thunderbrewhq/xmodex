@@ -65,7 +65,7 @@ FMOD_RESULT OutputALSA::enumerate() {
         return result;
     }
 
-    // this->mMaxDrivers = 32;
+    this->mMaxDrivers = 32;
     this->mDriverNames = static_cast<char**>(FMOD_Memory_Alloc(32 * sizeof(char*)));
     if (!this->mDriverNames) {
         return FMOD_ERR_MEMORY;
