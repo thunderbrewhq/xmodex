@@ -9,6 +9,13 @@ int32_t ASfxDsp::AllocateAllpassDelays(int32_t numDelays, float* delaySec, float
 
     this->DeallocateAllpassDelays();
 
+    if (!this->mAllpassDelays) {
+        this->mAllpassDelays = static_cast<float**>(FMOD_Memory_Calloc(kNumAllpassDelays * sizeof(float*)));
+        if (!this->mAllpassDelays) {
+            return REVERB_ALLPASS_ALLOCATION_ERR;
+        }
+    }
+
     for (int32_t delayLine = 0; delayLine < kNumAllpassDelays; delayLine++) {
         delaySamples = static_cast<int32_t>(delaySec[delayLine] * sampleRate) + 1;
         delaySamples = NextPowerOf2(delaySamples);
