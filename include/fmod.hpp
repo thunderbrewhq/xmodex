@@ -187,13 +187,25 @@
 
 // TODO: proper calling conventions
 
+#if defined(XMODEX_SYSTEM_WIN)
+
+#define F_STDCALL __stdcall
+#define F_CDECL __cdecl
+#define F_DLLEXPORT __declspec(dllexport)
+
+#define F_API __declspec(dllexport) F_STDCALL
+#define F_CALLBACK F_STDCALL
+
+#else
+
 #define F_STDCALL
 #define F_CDECL
-#define F_DECLSPEC
 #define F_DLLEXPORT
 
 #define F_API F_STDCALL
 #define F_CALLBACK F_STDCALL
+
+#endif
 
 typedef int32_t FMOD_BOOL;
 typedef uint32_t FMOD_MODE;
@@ -1155,12 +1167,15 @@ class System {
         FMOD_RESULT F_API setOutput(FMOD_OUTPUTTYPE output);
         FMOD_RESULT F_API getOutput(FMOD_OUTPUTTYPE* output);
         FMOD_RESULT F_API getNumDrivers(int32_t* numdrivers);
+        FMOD_RESULT F_API getDriver(int32_t* driver);
         FMOD_RESULT F_API getDriverName(int32_t id, char* name, int32_t namelen);
         FMOD_RESULT F_API getDriverCaps(int32_t id, FMOD_CAPS* caps, int32_t* minfrequency, int32_t* maxfrequency, FMOD_SPEAKERMODE* controlpanelspeakermode);
         FMOD_RESULT F_API setDriver(int32_t driver);
         FMOD_RESULT F_API setHardwareChannels(int32_t min2d, int32_t max2d, int32_t min3d, int32_t max3d);
         FMOD_RESULT F_API setSoftwareChannels(int32_t numsoftwarechannels);
+        FMOD_RESULT F_API getSoftwareChannels(int32_t* numsoftwarechannels);
         FMOD_RESULT F_API setSoftwareFormat(int32_t samplerate, FMOD_SOUND_FORMAT format, int32_t numoutputchannels, int32_t maxinputchannels, FMOD_DSP_RESAMPLER resamplemethod);
+        FMOD_RESULT F_API getSoftwareFormat(int32_t* samplerate, FMOD_SOUND_FORMAT* format, int32_t* numoutputchannels, int32_t* maxinputchannels, FMOD_DSP_RESAMPLER* resamplemethod, int32_t* bits);
         FMOD_RESULT F_API setDSPBufferSize(uint32_t bufferlength, int32_t numbuffers);
         FMOD_RESULT F_API setSpeakerMode(FMOD_SPEAKERMODE speakermode);
         FMOD_RESULT F_API setCallback(FMOD_SYSTEM_CALLBACKTYPE type, FMOD_SYSTEM_CALLBACK callback);
@@ -1182,6 +1197,7 @@ class System {
         FMOD_RESULT F_API playSound(FMOD_CHANNELINDEX channelid, Sound* sound, bool paused, Channel** channel);
         FMOD_RESULT F_API playDSP(FMOD_CHANNELINDEX channelid, DSP* dsp, bool paused, Channel** channel);
         FMOD_RESULT F_API getChannel(int32_t channelid, Channel** channel);
+        FMOD_RESULT F_API getMasterChannelGroup(ChannelGroup** channelgroup);
         FMOD_RESULT F_API setReverbProperties(FMOD_REVERB_PROPERTIES* prop);
         FMOD_RESULT F_API setRecordDriver(int32_t recorddriver);
         FMOD_RESULT F_API getRecordNumDrivers(int32_t* numdrivers);
@@ -1205,6 +1221,9 @@ class Sound {
         FMOD_RESULT F_API getLength(uint32_t* length, FMOD_TIMEUNIT lengthtype);
         FMOD_RESULT F_API setSoundGroup(SoundGroup* soundgroup);
         FMOD_RESULT F_API getUserData(void** _userdata);
+        FMOD_RESULT F_API set3DMinMaxDistance(float min, float max);
+        FMOD_RESULT F_API setLoopCount(int32_t loopcount);
+        FMOD_RESULT F_API getLoopCount(int32_t* loopcount);
 };
 
 class Channel {
@@ -1243,6 +1262,8 @@ class Channel {
         FMOD_RESULT F_API getMode(FMOD_MODE* mode);
         FMOD_RESULT F_API setUserData(void* _userdata);
         FMOD_RESULT F_API getUserData(void** _userdata);
+        FMOD_RESULT F_API setMute(bool mute);
+        FMOD_RESULT F_API getMute(bool* mute);
 };
 
 class ChannelGroup {
