@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.4.2)
+cmake_minimum_required(VERSION 3.10...4.4.2)
 
 project(xmodex)
 
