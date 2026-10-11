@@ -7,7 +7,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 # detect which system is being targeted
-if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows" OR ${CMAKE_SYSTEM_NAME} MATCHES "MSYS")
     set(XMODEX_SYSTEM_WIN 1)
     add_definitions(-DXMODEX_SYSTEM_WIN=1)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -25,9 +25,13 @@ else()
     add_definitions(-DXMODEX_CPU_LITTLEENDIAN=1)
 endif()
 
-# optional: build example programs?
-
 option(XMODEX_EXAMPLES "Build example programs" OFF)
+option(XMODEX_SHARED "Build xmodex as a shared library (not recommended)" OFF)
+option(XMODEX_COMPAT "Build experimental FMOD 3.X compatibility into xmodex (not recommended)" OFF)
+
+if(XMODEX_SHARED)
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif()
 
 add_subdirectory(xmodex)
 add_subdirectory(vendor)
