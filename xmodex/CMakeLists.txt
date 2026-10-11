@@ -36,9 +36,24 @@ if(XMODEX_SYSTEM_WIN)
     list(APPEND XMODEX_SOURCES ${XMODEX_WIN_SOURCES})
 endif()
 
+if(XMODEX_COMPAT)
+    list(APPEND XMODEX_SOURCES "compat/Compat.cpp")
+endif()
+
+if(XMODEX_SHARED)
+
+add_library(fmod SHARED
+    ${XMODEX_SOURCES}
+)
+
+else()
+
 add_library(fmod STATIC
     ${XMODEX_SOURCES}
 )
+
+endif()
+
 
 # add '${PROJECT_SOURCE_DIR}/include' directory for this
 # library and all who link against it
@@ -91,4 +106,11 @@ if(XMODEX_SYSTEM_MAC)
         PRIVATE 
             -Wno-deprecated-declarations
     )
+endif()
+
+# if we wish to distribute xmodex as a shared library,
+# link our standard libraries statically to avoid DLL hell
+
+if(XMODEX_SHARED)
+    target_link_options(fmod PRIVATE "-static")
 endif()
