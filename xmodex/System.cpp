@@ -3,7 +3,7 @@
 
 namespace FMOD {
 
-FMOD_RESULT System::release() {
+FMOD_RESULT F_API System::release() {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -13,7 +13,7 @@ FMOD_RESULT System::release() {
     return systemi->release();
 }
 
-FMOD_RESULT System::setOutput(FMOD_OUTPUTTYPE output) {
+FMOD_RESULT F_API System::setOutput(FMOD_OUTPUTTYPE output) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -23,7 +23,7 @@ FMOD_RESULT System::setOutput(FMOD_OUTPUTTYPE output) {
     return systemi->setOutput(output);
 }
 
-FMOD_RESULT System::getOutput(FMOD_OUTPUTTYPE* output) {
+FMOD_RESULT F_API System::getOutput(FMOD_OUTPUTTYPE* output) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -33,7 +33,7 @@ FMOD_RESULT System::getOutput(FMOD_OUTPUTTYPE* output) {
     return systemi->getOutput(output);
 }
 
-FMOD_RESULT System::getNumDrivers(int32_t* numdrivers) {
+FMOD_RESULT F_API System::getNumDrivers(int32_t* numdrivers) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -43,7 +43,19 @@ FMOD_RESULT System::getNumDrivers(int32_t* numdrivers) {
     return systemi->getNumDrivers(numdrivers);
 }
 
-FMOD_RESULT System::getDriverName(int32_t id, char* name, int32_t namelen) {
+FMOD_RESULT F_API System::getDriver(int32_t* driver) {
+    FMOD_RESULT result;
+    SystemI* systemi;
+
+    result = SystemI::validate(this, &systemi);
+    if (result != FMOD_OK) {
+        return result;
+    } else {
+        return systemi->getDriver(driver);
+    }
+}
+
+FMOD_RESULT F_API System::getDriverName(int32_t id, char* name, int32_t namelen) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -53,7 +65,7 @@ FMOD_RESULT System::getDriverName(int32_t id, char* name, int32_t namelen) {
     return systemi->getDriverName(id, name, namelen);
 }
 
-FMOD_RESULT System::getDriverCaps(int32_t id, FMOD_CAPS* caps, int32_t* minfrequency, int32_t* maxfrequency, FMOD_SPEAKERMODE* controlpanelspeakermode) {
+FMOD_RESULT F_API System::getDriverCaps(int32_t id, FMOD_CAPS* caps, int32_t* minfrequency, int32_t* maxfrequency, FMOD_SPEAKERMODE* controlpanelspeakermode) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -63,7 +75,7 @@ FMOD_RESULT System::getDriverCaps(int32_t id, FMOD_CAPS* caps, int32_t* minfrequ
     return systemi->getDriverCaps(id, caps, minfrequency, maxfrequency, controlpanelspeakermode);
 }
 
-FMOD_RESULT System::setDriver(int32_t driver) {
+FMOD_RESULT F_API System::setDriver(int32_t driver) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -73,7 +85,7 @@ FMOD_RESULT System::setDriver(int32_t driver) {
     return systemi->setDriver(driver);
 }
 
-FMOD_RESULT System::setHardwareChannels(int32_t min2d, int32_t max2d, int32_t min3d, int32_t max3d) {
+FMOD_RESULT F_API System::setHardwareChannels(int32_t min2d, int32_t max2d, int32_t min3d, int32_t max3d) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -83,7 +95,7 @@ FMOD_RESULT System::setHardwareChannels(int32_t min2d, int32_t max2d, int32_t mi
     return systemi->setHardwareChannels(min2d, max2d, min3d, max3d);
 }
 
-FMOD_RESULT System::setSoftwareChannels(int32_t numsoftwarechannels) {
+FMOD_RESULT F_API System::setSoftwareChannels(int32_t numsoftwarechannels) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -93,7 +105,19 @@ FMOD_RESULT System::setSoftwareChannels(int32_t numsoftwarechannels) {
     return systemi->setSoftwareChannels(numsoftwarechannels);
 }
 
-FMOD_RESULT System::setSoftwareFormat(int32_t samplerate, FMOD_SOUND_FORMAT format, int32_t numoutputchannels, int32_t maxinputchannels, FMOD_DSP_RESAMPLER resamplemethod) {
+FMOD_RESULT F_API System::getSoftwareChannels(int32_t* numsoftwarechannels) {
+    FMOD_RESULT result;
+    SystemI* systemi;
+
+    result = SystemI::validate(this, &systemi);
+    if (result != FMOD_OK) {
+        return result;
+    } else {
+        return systemi->getSoftwareChannels(numsoftwarechannels);
+    }
+}
+
+FMOD_RESULT F_API System::setSoftwareFormat(int32_t samplerate, FMOD_SOUND_FORMAT format, int32_t numoutputchannels, int32_t maxinputchannels, FMOD_DSP_RESAMPLER resamplemethod) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -103,7 +127,19 @@ FMOD_RESULT System::setSoftwareFormat(int32_t samplerate, FMOD_SOUND_FORMAT form
     return systemi->setSoftwareFormat(samplerate, format, numoutputchannels, maxinputchannels, resamplemethod);
 }
 
-FMOD_RESULT System::setDSPBufferSize(uint32_t bufferlength, int32_t numbuffers) {
+FMOD_RESULT F_API System::getSoftwareFormat(int32_t* samplerate, FMOD_SOUND_FORMAT* format, int32_t* numoutputchannels, int32_t* maxinputchannels, FMOD_DSP_RESAMPLER* resamplemethod, int32_t* bits) {
+    FMOD_RESULT result;
+    SystemI* systemi;
+
+    result = SystemI::validate(this, &systemi);
+    if (result != FMOD_OK) {
+        return result;
+    } else {
+        return systemi->getSoftwareFormat(samplerate, format, numoutputchannels, maxinputchannels, resamplemethod, bits);
+    }
+}
+
+FMOD_RESULT F_API System::setDSPBufferSize(uint32_t bufferlength, int32_t numbuffers) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -113,7 +149,7 @@ FMOD_RESULT System::setDSPBufferSize(uint32_t bufferlength, int32_t numbuffers) 
     return systemi->setDSPBufferSize(bufferlength, numbuffers);
 }
 
-FMOD_RESULT System::setSpeakerMode(FMOD_SPEAKERMODE speakermode) {
+FMOD_RESULT F_API System::setSpeakerMode(FMOD_SPEAKERMODE speakermode) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -123,7 +159,7 @@ FMOD_RESULT System::setSpeakerMode(FMOD_SPEAKERMODE speakermode) {
     return systemi->setSpeakerMode(speakermode);
 }
 
-FMOD_RESULT System::setCallback(FMOD_SYSTEM_CALLBACKTYPE type, FMOD_SYSTEM_CALLBACK callback) {
+FMOD_RESULT F_API System::setCallback(FMOD_SYSTEM_CALLBACKTYPE type, FMOD_SYSTEM_CALLBACK callback) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -133,7 +169,7 @@ FMOD_RESULT System::setCallback(FMOD_SYSTEM_CALLBACKTYPE type, FMOD_SYSTEM_CALLB
     return systemi->setCallback(type, callback);
 }
 
-FMOD_RESULT System::init(int32_t maxchannels, FMOD_INITFLAGS flags, void* extradriverdata) {
+FMOD_RESULT F_API System::init(int32_t maxchannels, FMOD_INITFLAGS flags, void* extradriverdata) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -143,7 +179,7 @@ FMOD_RESULT System::init(int32_t maxchannels, FMOD_INITFLAGS flags, void* extrad
     return systemi->init(maxchannels, flags, extradriverdata);
 }
 
-FMOD_RESULT System::close() {
+FMOD_RESULT F_API System::close() {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -153,7 +189,7 @@ FMOD_RESULT System::close() {
     return systemi->close();
 }
 
-FMOD_RESULT System::update() {
+FMOD_RESULT F_API System::update() {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -163,7 +199,7 @@ FMOD_RESULT System::update() {
     return systemi->update();
 }
 
-FMOD_RESULT System::set3DSettings(float dopplerscale, float distancefactor, float rolloffscale) {
+FMOD_RESULT F_API System::set3DSettings(float dopplerscale, float distancefactor, float rolloffscale) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -173,7 +209,7 @@ FMOD_RESULT System::set3DSettings(float dopplerscale, float distancefactor, floa
     return systemi->set3DSettings(dopplerscale, distancefactor, rolloffscale);
 }
 
-FMOD_RESULT System::set3DListenerAttributes(int32_t listener, const FMOD_VECTOR* pos, const FMOD_VECTOR* vel, const FMOD_VECTOR* forward, const FMOD_VECTOR* up) {
+FMOD_RESULT F_API System::set3DListenerAttributes(int32_t listener, const FMOD_VECTOR* pos, const FMOD_VECTOR* vel, const FMOD_VECTOR* forward, const FMOD_VECTOR* up) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -183,7 +219,7 @@ FMOD_RESULT System::set3DListenerAttributes(int32_t listener, const FMOD_VECTOR*
     return systemi->set3DListenerAttributes(listener, pos, vel, forward, up);
 }
 
-FMOD_RESULT System::get3DListenerAttributes(int32_t listener, FMOD_VECTOR* pos, FMOD_VECTOR* vel, FMOD_VECTOR* forward, FMOD_VECTOR* up) {
+FMOD_RESULT F_API System::get3DListenerAttributes(int32_t listener, FMOD_VECTOR* pos, FMOD_VECTOR* vel, FMOD_VECTOR* forward, FMOD_VECTOR* up) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -193,7 +229,7 @@ FMOD_RESULT System::get3DListenerAttributes(int32_t listener, FMOD_VECTOR* pos, 
     return systemi->get3DListenerAttributes(listener, pos, vel, forward, up);
 }
 
-FMOD_RESULT System::set3DRolloffCallback(FMOD_3D_ROLLOFFCALLBACK callback) {
+FMOD_RESULT F_API System::set3DRolloffCallback(FMOD_3D_ROLLOFFCALLBACK callback) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -203,7 +239,7 @@ FMOD_RESULT System::set3DRolloffCallback(FMOD_3D_ROLLOFFCALLBACK callback) {
     return systemi->set3DRolloffCallback(callback);
 }
 
-FMOD_RESULT System::getVersion(uint32_t* version) {
+FMOD_RESULT F_API System::getVersion(uint32_t* version) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -213,7 +249,7 @@ FMOD_RESULT System::getVersion(uint32_t* version) {
     return systemi->getVersion(version);
 }
 
-FMOD_RESULT System::getHardwareChannels(int32_t* num2d, int32_t* num3d, int32_t* total) {
+FMOD_RESULT F_API System::getHardwareChannels(int32_t* num2d, int32_t* num3d, int32_t* total) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -223,7 +259,7 @@ FMOD_RESULT System::getHardwareChannels(int32_t* num2d, int32_t* num3d, int32_t*
     return systemi->getHardwareChannels(num2d, num3d, total);
 }
 
-FMOD_RESULT System::createSound(const char* name_or_data, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO* exinfo, Sound** sound) {
+FMOD_RESULT F_API System::createSound(const char* name_or_data, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO* exinfo, Sound** sound) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -233,7 +269,7 @@ FMOD_RESULT System::createSound(const char* name_or_data, FMOD_MODE mode, FMOD_C
     return systemi->createSound(name_or_data, mode, exinfo, reinterpret_cast<SoundI**>(sound));
 }
 
-FMOD_RESULT System::createStream(const char* name_or_data, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO* exinfo, Sound** sound) {
+FMOD_RESULT F_API System::createStream(const char* name_or_data, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO* exinfo, Sound** sound) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -243,7 +279,7 @@ FMOD_RESULT System::createStream(const char* name_or_data, FMOD_MODE mode, FMOD_
     return systemi->createStream(name_or_data, mode, exinfo, reinterpret_cast<SoundI**>(sound));
 }
 
-FMOD_RESULT System::createDSP(FMOD_DSP_DESCRIPTION* description, DSP** dsp) {
+FMOD_RESULT F_API System::createDSP(FMOD_DSP_DESCRIPTION* description, DSP** dsp) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -253,7 +289,7 @@ FMOD_RESULT System::createDSP(FMOD_DSP_DESCRIPTION* description, DSP** dsp) {
     return systemi->createDSP(description, reinterpret_cast<DSPI**>(dsp));
 }
 
-FMOD_RESULT System::createDSPByType(FMOD_DSP_TYPE type, DSP** dsp) {
+FMOD_RESULT F_API System::createDSPByType(FMOD_DSP_TYPE type, DSP** dsp) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -263,7 +299,7 @@ FMOD_RESULT System::createDSPByType(FMOD_DSP_TYPE type, DSP** dsp) {
     return systemi->createDSPByType(type, reinterpret_cast<DSPI**>(dsp));
 }
 
-FMOD_RESULT System::createChannelGroup(const char* name, ChannelGroup** channelgroup) {
+FMOD_RESULT F_API System::createChannelGroup(const char* name, ChannelGroup** channelgroup) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -273,7 +309,7 @@ FMOD_RESULT System::createChannelGroup(const char* name, ChannelGroup** channelg
     return systemi->createChannelGroup(name, reinterpret_cast<ChannelGroupI**>(channelgroup));
 }
 
-FMOD_RESULT System::createSoundGroup(const char* name, SoundGroup** soundgroup) {
+FMOD_RESULT F_API System::createSoundGroup(const char* name, SoundGroup** soundgroup) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -283,7 +319,7 @@ FMOD_RESULT System::createSoundGroup(const char* name, SoundGroup** soundgroup) 
     return systemi->createSoundGroup(name, reinterpret_cast<SoundGroupI**>(soundgroup));
 }
 
-FMOD_RESULT System::playSound(FMOD_CHANNELINDEX channelid, Sound* sound, bool paused, Channel** channel) {
+FMOD_RESULT F_API System::playSound(FMOD_CHANNELINDEX channelid, Sound* sound, bool paused, Channel** channel) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -293,7 +329,7 @@ FMOD_RESULT System::playSound(FMOD_CHANNELINDEX channelid, Sound* sound, bool pa
     return systemi->playSound(channelid, reinterpret_cast<SoundI*>(sound), paused, reinterpret_cast<ChannelI**>(channel));
 }
 
-FMOD_RESULT System::playDSP(FMOD_CHANNELINDEX channelid, DSP* dsp, bool paused, Channel** channel) {
+FMOD_RESULT F_API System::playDSP(FMOD_CHANNELINDEX channelid, DSP* dsp, bool paused, Channel** channel) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -303,7 +339,7 @@ FMOD_RESULT System::playDSP(FMOD_CHANNELINDEX channelid, DSP* dsp, bool paused, 
     return systemi->playDSP(channelid, reinterpret_cast<DSPI*>(dsp), paused, reinterpret_cast<ChannelI**>(channel));
 }
 
-FMOD_RESULT System::getChannel(int32_t channelid, Channel** channel) {
+FMOD_RESULT F_API System::getChannel(int32_t channelid, Channel** channel) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -313,7 +349,19 @@ FMOD_RESULT System::getChannel(int32_t channelid, Channel** channel) {
     return systemi->getChannel(channelid, reinterpret_cast<ChannelI**>(channel));
 }
 
-FMOD_RESULT System::setReverbProperties(FMOD_REVERB_PROPERTIES* prop) {
+FMOD_RESULT F_API System::getMasterChannelGroup(ChannelGroup** channelgroup) {
+    FMOD_RESULT result;
+    SystemI* systemi;
+
+    result = SystemI::validate(this, &systemi);
+    if (result != FMOD_OK) {
+        return result;
+    } else {
+        return systemi->getMasterChannelGroup(reinterpret_cast<ChannelGroupI**>(channelgroup));
+    }
+}
+
+FMOD_RESULT F_API System::setReverbProperties(FMOD_REVERB_PROPERTIES* prop) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -323,7 +371,7 @@ FMOD_RESULT System::setReverbProperties(FMOD_REVERB_PROPERTIES* prop) {
     return systemi->setReverbProperties(prop, false);
 }
 
-FMOD_RESULT System::setRecordDriver(int32_t recorddriver) {
+FMOD_RESULT F_API System::setRecordDriver(int32_t recorddriver) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -333,7 +381,7 @@ FMOD_RESULT System::setRecordDriver(int32_t recorddriver) {
     return systemi->setRecordDriver(recorddriver);
 }
 
-FMOD_RESULT System::getRecordNumDrivers(int32_t* numdrivers) {
+FMOD_RESULT F_API System::getRecordNumDrivers(int32_t* numdrivers) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -343,7 +391,7 @@ FMOD_RESULT System::getRecordNumDrivers(int32_t* numdrivers) {
     return systemi->getRecordNumDrivers(numdrivers);
 }
 
-FMOD_RESULT System::getRecordDriverName(int32_t id, char* name, int32_t namelen) {
+FMOD_RESULT F_API System::getRecordDriverName(int32_t id, char* name, int32_t namelen) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -353,7 +401,7 @@ FMOD_RESULT System::getRecordDriverName(int32_t id, char* name, int32_t namelen)
     return systemi->getRecordDriverName(id, name, namelen);
 }
 
-FMOD_RESULT System::getRecordPosition(uint32_t* position) {
+FMOD_RESULT F_API System::getRecordPosition(uint32_t* position) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -363,7 +411,7 @@ FMOD_RESULT System::getRecordPosition(uint32_t* position) {
     return systemi->getRecordPosition(position);
 }
 
-FMOD_RESULT System::recordStart(Sound* sound, bool loop) {
+FMOD_RESULT F_API System::recordStart(Sound* sound, bool loop) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -373,7 +421,7 @@ FMOD_RESULT System::recordStart(Sound* sound, bool loop) {
     return systemi->recordStart(reinterpret_cast<SoundI*>(sound), loop);
 }
 
-FMOD_RESULT System::recordStop() {
+FMOD_RESULT F_API System::recordStop() {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);
@@ -383,7 +431,7 @@ FMOD_RESULT System::recordStop() {
     return systemi->recordStop();
 }
 
-FMOD_RESULT System::isRecording(bool* recording) {
+FMOD_RESULT F_API System::isRecording(bool* recording) {
     FMOD_RESULT result;
     SystemI* systemi;
     result = SystemI::validate(this, &systemi);

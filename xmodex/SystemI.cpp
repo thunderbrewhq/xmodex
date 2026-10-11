@@ -796,6 +796,8 @@ FMOD_RESULT SystemI::createSample(FMOD_MODE mode, FMOD_CODEC_WAVEFORMAT* wavefor
         } else {
             subsamples = 1;
         }
+    } else {
+        subsamples = 1;
     }
 
     for (int32_t i = 0; i < subsamples; i++) {
@@ -2348,6 +2350,16 @@ FMOD_RESULT SystemI::getDSPHead(DSPI** dsp) {
     return FMOD_OK;
 }
 
+FMOD_RESULT SystemI::getDriver(int32_t* driver) {
+    if (!driver) {
+        return FMOD_ERR_INVALID_PARAM;
+    }
+
+    *driver = this->mSelectedDriver;
+
+    return FMOD_OK;
+}
+
 FMOD_RESULT SystemI::getDriverCaps(int32_t id, FMOD_CAPS* caps, int32_t* minfrequency, int32_t* maxfrequency, FMOD_SPEAKERMODE* controlpanelspeakermode) {
     FMOD_RESULT result;
     FMOD_CAPS lcaps;
@@ -3670,6 +3682,16 @@ FMOD_RESULT SystemI::setSoftwareChannels(int32_t numsoftwarechannels) {
     return FMOD_OK;
 }
 
+FMOD_RESULT SystemI::getSoftwareChannels(int32_t* numsoftwarechannels) {
+    if (!numsoftwarechannels) {
+        return FMOD_ERR_INVALID_PARAM;
+    }
+
+    *numsoftwarechannels = this->mNumSoftwareChannels;
+
+    return FMOD_OK;
+}
+
 FMOD_RESULT SystemI::setSoftwareFormat(int32_t samplerate, FMOD_SOUND_FORMAT format, int32_t numoutputchannels, int32_t maxinputchannels, FMOD_DSP_RESAMPLER resamplermethod) {
     if (this->mInitialized) {
         return FMOD_ERR_INITIALIZED;
@@ -4474,14 +4496,13 @@ tryformore:
 }
 
 FMOD_RESULT SystemI::updateSoundGroups(int32_t delta) {
-    auto soundgroup = reinterpret_cast<SoundGroupI*>(this->mSoundGroupUsedHead.getNext());
+    auto soundgroup = static_cast<SoundGroupI*>(this->mSoundGroupUsedHead.getNext());
     bool mute = false;
 
     while (soundgroup != &this->mSoundGroupUsedHead) {
-        auto next = reinterpret_cast<SoundGroupI*>(soundgroup->getNext());
+        auto next = static_cast<SoundGroupI*>(soundgroup->getNext());
 
         soundgroup->mPlayCount = 0;
-
         soundgroup->getNumPlaying(&soundgroup->mNumAudible);
         if (!soundgroup->mNumAudible) {
             soundgroup->removeNode();

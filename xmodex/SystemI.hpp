@@ -172,6 +172,7 @@ class SystemI : public LinkedListNode {
         FMOD_RESULT getChannel(int32_t id, ChannelI** channel);
         FMOD_RESULT getDSPBufferSize(uint32_t* bufferlength, int32_t* numbuffers);
         FMOD_RESULT getDSPHead(DSPI** dsp);
+        FMOD_RESULT getDriver(int32_t* driver);
         FMOD_RESULT getDriverCaps(int32_t id, FMOD_CAPS* caps, int32_t* minfrequency, int32_t* maxfrequency, FMOD_SPEAKERMODE* controlpanelspeakermode);
         FMOD_RESULT getDriverName(int32_t id, char* name, int32_t namelen);
         FMOD_RESULT getHardwareChannels(int32_t* num2d, int32_t* num3d, int32_t* total);
@@ -209,6 +210,7 @@ class SystemI : public LinkedListNode {
         FMOD_RESULT setReverbAmbientProperties(FMOD_REVERB_PROPERTIES* prop);
         FMOD_RESULT setReverbProperties(FMOD_REVERB_PROPERTIES* prop, bool force_create);
         FMOD_RESULT setSoftwareChannels(int32_t numsoftwarechannels);
+        FMOD_RESULT getSoftwareChannels(int32_t* numsoftwarechannels);
         FMOD_RESULT setSoftwareFormat(int32_t samplerate, FMOD_SOUND_FORMAT format, int32_t numoutputchannels, int32_t maxinputchannels, FMOD_DSP_RESAMPLER resamplermethod);
         FMOD_RESULT setSpeakerMode(FMOD_SPEAKERMODE speakermode);
         FMOD_RESULT setUpPlugins();
