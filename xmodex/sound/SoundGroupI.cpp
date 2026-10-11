@@ -17,10 +17,11 @@ FMOD_RESULT SoundGroupI::release() {
     }
 
     if (this->mSystem->mSoundGroup) {
-        auto sound = static_cast<SoundI*>(this->mSoundHead.getNext());
-        while (sound != &this->mSoundHead) {
+        auto current = this->mSoundHead.getNext();
+        while (current != &this->mSoundHead) {
+            auto sound = static_cast<SoundI*>(current->getData());
             sound->setSoundGroup(this->mSystem->mSoundGroup);
-            sound = static_cast<SoundI*>(sound->getNext());
+            current = this->mSoundHead.getNext();
         }
     }
 
@@ -73,12 +74,13 @@ FMOD_RESULT SoundGroupI::getNumPlaying(int32_t* numplaying) {
         return FMOD_ERR_INVALID_PARAM;
     }
 
-    auto current = static_cast<SoundI*>(this->mSoundHead.getNext());
+    auto current = this->mSoundHead.getNext();
     *numplaying = 0;
 
     while (current != &this->mSoundHead) {
-        *numplaying += current->mNumAudible;
-        current = static_cast<SoundI*>(current->getNext());
+        auto soundi = static_cast<SoundI*>(current->getData());
+        *numplaying += soundi->mNumAudible;
+        current = current->getNext();
     }
 
     return FMOD_OK;

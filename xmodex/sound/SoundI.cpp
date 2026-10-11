@@ -427,7 +427,7 @@ FMOD_RESULT SoundI::release(bool freethis) {
         auto point = static_cast<SyncPoint*>(this->mSyncPointHead->getNext());
         while (point != this->mSyncPointHead) {
             this->deleteSyncPoint(reinterpret_cast<FMOD_SYNCPOINT*>(point));
-            point = static_cast<SyncPoint*>(point->getNext());
+            point = static_cast<SyncPoint*>(this->mSyncPointHead->getNext());
         }
 
         FMOD_Memory_Free(this->mSyncPointHead);
@@ -559,6 +559,10 @@ FMOD_RESULT SoundI::release(bool freethis) {
     }
 
     FMOD_OS_CriticalSection_Enter(SystemI::gSoundListCrit);
+    this->removeNode();
+    this->mSoundGroupNode.removeNode();
+
+    FMOD_OS_CriticalSection_Leave(SystemI::gSoundListCrit);
 
     if (freethis && !this->mSubSoundShared) {
         FMOD_Memory_Free(this);

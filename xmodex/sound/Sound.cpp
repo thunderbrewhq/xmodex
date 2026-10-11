@@ -121,4 +121,50 @@ FMOD_RESULT F_API Sound::getUserData(void** _userdata) {
     }
 }
 
+FMOD_RESULT F_API Sound::set3DMinMaxDistance(float min, float max) {
+    FMOD_RESULT result;
+    SoundI* soundi;
+
+    result = SoundI::validate(this, &soundi);
+    if (result != FMOD_OK) {
+        return result;
+    } else {
+        if (soundi->mOpenState != FMOD_OPENSTATE_READY) {
+            return FMOD_ERR_NOTREADY;
+        }
+
+        return soundi->set3DMinMaxDistance(min, max);
+    }
+}
+
+FMOD_RESULT F_API Sound::setLoopCount(int32_t loopcount) {
+    FMOD_RESULT result;
+    SoundI* soundi;
+
+    result = SoundI::validate(this, &soundi);
+    if (result != FMOD_OK) {
+        return result;
+    } else {
+        if (soundi->mOpenState != FMOD_OPENSTATE_READY) {
+            return FMOD_ERR_NOTREADY;
+        }
+        return soundi->setLoopCount(loopcount);
+    }
+}
+
+FMOD_RESULT F_API Sound::getLoopCount(int32_t* loopcount) {
+    FMOD_RESULT result;
+    SoundI* soundi;
+
+    result = SoundI::validate(this, &soundi);
+    if (result != FMOD_OK) {
+        return result;
+    } else {
+        if (soundi->mOpenState != FMOD_OPENSTATE_READY) {
+            return FMOD_ERR_NOTREADY;
+        }
+        return soundi->getLoopCount(loopcount);
+    }
+}
+
 } // namespace FMOD
