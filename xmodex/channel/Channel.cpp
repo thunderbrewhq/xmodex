@@ -412,11 +412,38 @@ FMOD_RESULT F_API Channel::getUserData(void** _userdata) {
     result = ChannelI::validate(this, &channeli);
     if (result != FMOD_OK) {
         if (_userdata) {
-            *_userdata = 0;
+            *_userdata = nullptr;
         }
         return result;
     } else {
         return channeli->getUserData(_userdata);
+    }
+}
+
+FMOD_RESULT F_API Channel::setMute(bool mute) {
+    FMOD_RESULT result;
+    ChannelI* channeli;
+
+    result = ChannelI::validate(this, &channeli);
+    if (result != FMOD_OK) {
+        return result;
+    } else {
+        return channeli->setMute(mute);
+    }
+}
+
+FMOD_RESULT F_API Channel::getMute(bool* mute) {
+    FMOD_RESULT result;
+    ChannelI* channeli;
+
+    result = ChannelI::validate(this, &channeli);
+    if (result != FMOD_OK) {
+        if (mute) {
+            *mute = false;
+        }
+        return result;
+    } else {
+        return channeli->getMute(mute);
     }
 }
 
