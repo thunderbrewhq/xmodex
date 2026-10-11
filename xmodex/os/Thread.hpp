@@ -13,7 +13,7 @@ enum FMOD_THREAD_PRIORITY {
     FMOD_THREAD_PRIORITY_CRITICAL = 3
 };
 
-typedef uintptr_t (*FMOD_THREAD_CALLBACK)(void* userdata);
+typedef uintptr_t(F_CALLBACK* FMOD_THREAD_CALLBACK)(void* userdata);
 
 FMOD_RESULT FMOD_OS_Thread_GetCurrentID(FMOD_UINT_NATIVE* id);
 
