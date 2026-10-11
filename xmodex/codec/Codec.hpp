@@ -70,10 +70,10 @@ class Codec : public Plugin, public FMOD_CODEC_STATE {
         FMOD_RESULT reset();
         FMOD_RESULT setPosition(int32_t subsound, uint32_t position, FMOD_TIMEUNIT postype);
 
-        static FMOD_RESULT defaultFileRead(void* handle, void* buffer, uint32_t size, uint32_t* read, void* userdata);
-        static FMOD_RESULT defaultFileSeek(void* handle, uint32_t pos, void* userdata);
-        static FMOD_RESULT defaultGetWaveFormat(FMOD_CODEC_STATE* codec, int32_t index, FMOD_CODEC_WAVEFORMAT* waveformat_out);
-        static FMOD_RESULT defaultMetaData(FMOD_CODEC_STATE* codec, FMOD_TAGTYPE type, char* name, void* data, uint32_t datalen, FMOD_TAGDATATYPE datatype, int32_t unique);
+        static FMOD_RESULT F_CALLBACK defaultFileRead(void* handle, void* buffer, uint32_t size, uint32_t* read, void* userdata);
+        static FMOD_RESULT F_CALLBACK defaultFileSeek(void* handle, uint32_t pos, void* userdata);
+        static FMOD_RESULT F_CALLBACK defaultGetWaveFormat(FMOD_CODEC_STATE* codec, int32_t index, FMOD_CODEC_WAVEFORMAT* waveformat_out);
+        static FMOD_RESULT F_CALLBACK defaultMetaData(FMOD_CODEC_STATE* codec, FMOD_TAGTYPE type, char* name, void* data, uint32_t datalen, FMOD_TAGDATATYPE datatype, int32_t unique);
 };
 
 } // namespace FMOD

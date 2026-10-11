@@ -2,11 +2,11 @@
 #define XMODEX_OUTPUT_WIN_OUTPUT_WASAPI_HPP
 
 #include "xmodex/output/win/OutputTimer.hpp"
-#include <initguid.h>
-#include <windows.h>
-#include <mmdeviceapi.h>
 #include <audioclient.h>
 #include <cstdint>
+#include <initguid.h>
+#include <mmdeviceapi.h>
+#include <windows.h>
 
 namespace FMOD {
 

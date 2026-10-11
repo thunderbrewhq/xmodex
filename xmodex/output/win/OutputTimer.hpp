@@ -2,6 +2,7 @@
 #define XMODEX_OUTPUT_WIN_OUTPUT_TIMER_HPP
 
 #include "xmodex/output/Output.hpp"
+#include <windows.h>
 
 namespace FMOD {
 
@@ -16,7 +17,7 @@ class OutputTimer : public Output {
 
     private:
         FMOD_RESULT timerFunc();
-        static void F_CALLBACK timerFuncCallback(uint32_t uTimerID, uint32_t uMsg, uintptr_t dwUser, uintptr_t dw1, uintptr_t dw2);
+        static void F_CALLBACK timerFuncCallback(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2);
 
     public:
         FMOD_RESULT stop();

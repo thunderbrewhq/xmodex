@@ -97,7 +97,7 @@ FMOD_RESULT OutputTimer::timerFunc() {
     return FMOD_OK;
 }
 
-void F_CALLBACK OutputTimer::timerFuncCallback(uint32_t uTimerID, uint32_t uMsg, uintptr_t dwUser, uintptr_t dw1, uintptr_t dw2) {
+void F_CALLBACK OutputTimer::timerFuncCallback(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2) {
     auto outputTimer = reinterpret_cast<OutputTimer*>(dwUser);
 
     FMOD_OS_CriticalSection_Enter(outputTimer->mMixerCrit);
@@ -159,7 +159,7 @@ FMOD_RESULT OutputTimer::start() {
     this->mMixerTimerID = timeSetEvent(
         static_cast<UINT>(this->mMixerTimerPeriod),
         0,
-        static_cast<LPTIMECALLBACK>(timerFuncCallback),
+        OutputTimer::timerFuncCallback,
         reinterpret_cast<DWORD_PTR>(this),
         TIME_PERIODIC);
     if (!this->mMixerTimerID) {

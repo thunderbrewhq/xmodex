@@ -305,15 +305,15 @@ FMOD_RESULT Codec::setPosition(int32_t subsound, uint32_t position, FMOD_TIMEUNI
     return FMOD_OK;
 }
 
-FMOD_RESULT Codec::defaultFileRead(void* handle, void* buffer, uint32_t size, uint32_t* read, void* userdata) {
+FMOD_RESULT F_CALLBACK Codec::defaultFileRead(void* handle, void* buffer, uint32_t size, uint32_t* read, void* userdata) {
     return static_cast<File*>(handle)->read(buffer, 1, size, read);
 }
 
-FMOD_RESULT Codec::defaultFileSeek(void* handle, uint32_t pos, void* userdata) {
+FMOD_RESULT F_CALLBACK Codec::defaultFileSeek(void* handle, uint32_t pos, void* userdata) {
     return static_cast<File*>(handle)->seek(pos, 0);
 }
 
-FMOD_RESULT Codec::defaultGetWaveFormat(FMOD_CODEC_STATE* codec, int32_t index, FMOD_CODEC_WAVEFORMAT* waveformat_out) {
+FMOD_RESULT F_CALLBACK Codec::defaultGetWaveFormat(FMOD_CODEC_STATE* codec, int32_t index, FMOD_CODEC_WAVEFORMAT* waveformat_out) {
     if (!codec->waveformat) {
         return FMOD_ERR_INTERNAL;
     }
@@ -330,7 +330,7 @@ FMOD_RESULT Codec::defaultGetWaveFormat(FMOD_CODEC_STATE* codec, int32_t index, 
     return FMOD_OK;
 }
 
-FMOD_RESULT Codec::defaultMetaData(FMOD_CODEC_STATE* codec, FMOD_TAGTYPE type, char* name, void* data, uint32_t datalen, FMOD_TAGDATATYPE datatype, int32_t unique) {
+FMOD_RESULT F_CALLBACK Codec::defaultMetaData(FMOD_CODEC_STATE* codec, FMOD_TAGTYPE type, char* name, void* data, uint32_t datalen, FMOD_TAGDATATYPE datatype, int32_t unique) {
     return static_cast<Codec*>(codec)->metaData(type, name, data, datalen, datatype, unique == 1 ? true : false);
 }
 

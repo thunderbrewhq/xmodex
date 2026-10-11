@@ -1,7 +1,7 @@
+#include "xmodex/output/win/OutputWASAPI.hpp"
 #include "xmodex/Memory.hpp"
 #include "xmodex/String.hpp"
 #include "xmodex/SystemI.hpp"
-#include "xmodex/output/win/OutputWASAPI.hpp"
 #include "xmodex/sound/SoundI.hpp"
 #include <cstdio>
 
@@ -12,6 +12,11 @@ static const GUID _KSDATAFORMAT_SUBTYPE_IEEE_FLOAT = { 0x00000003, 0x0000, 0x001
 
 static const PROPERTYKEY PKEY_Device_DeviceDesc = { { 0xa45c254e, 0xdf1c, 0x4efd, { 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0 } }, 2 };
 static const PROPERTYKEY PKEY_DeviceInterface_FriendlyName = { { 0x026e516e, 0xb814, 0x414b, { 0x83, 0xcd, 0x85, 0x6d, 0x6f, 0xef, 0x48, 0x22 } }, 2 };
+
+static const GUID IID_IAudioClock = { 0xcd63314f, 0x3fba, 0x4a1b, { 0x81, 0x2c, 0xef, 0x96, 0x35, 0x87, 0x28, 0xe7 } };
+static const GUID IID_IAudioClient = { 0x1cb9ad4c, 0xdbfa, 0x4c32, { 0xb1, 0x78, 0xc2, 0xf5, 0x68, 0xa7, 0x03, 0xb2 } };
+static const GUID IID_IAudioRenderClient = { 0xf294acfc, 0x3146, 0x4483, { 0xa7, 0xbf, 0xad, 0xdc, 0xa7, 0xc2, 0x60, 0xe2 } };
+static const GUID IID_IAudioCaptureClient = { 0xc8adbd64, 0xe71e, 0x48a0, { 0xa4, 0xde, 0x18, 0x5c, 0x39, 0x5c, 0xd3, 0x17 } };
 
 FMOD_OUTPUT_DESCRIPTION_EX wasapioutput;
 
@@ -983,7 +988,7 @@ FMOD_RESULT OutputWASAPI::recordStart(int32_t id, Sound* sound, bool loop) {
     this->mRecordTimerPeriod = period * 0.0001f;
     this->mRecordWritePosition = 0;
 
-    this->mRecordTimerID = timeSetEvent(static_cast<UINT>(this->mRecordTimerPeriod), 0, recordUpdateCallback, reinterpret_cast<DWORD_PTR>(this), TIME_PERIODIC);
+    this->mRecordTimerID = timeSetEvent(static_cast<UINT>(this->mRecordTimerPeriod), 0, OutputWASAPI::recordUpdateCallback, reinterpret_cast<DWORD_PTR>(this), TIME_PERIODIC);
     if (!this->mRecordTimerID) {
         return FMOD_ERR_OUTPUT_INIT;
     }
