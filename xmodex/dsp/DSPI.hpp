@@ -20,7 +20,7 @@
 
 namespace FMOD {
 
-struct DSPConnection;
+class DSPConnection;
 
 enum FMOD_DSP_CATEGORY {
     FMOD_DSP_CATEGORY_FILTER,
