@@ -1,8 +1,9 @@
 #include "fmod.hpp"
 #include "fmod_errors.h"
+#include <chrono>
 #include <cstdio>
 #include <cstdlib>
-#include <unistd.h>
+#include <thread>
 
 void check_result(const char* message, FMOD_RESULT result) {
     if (result != FMOD_OK) {
@@ -53,9 +54,7 @@ int main(int argc, char* argv[]) {
             channel->isPlaying(&isplaying);
         }
 
-        printf("tick %d\n", isplaying);
-
-        usleep(1000);
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 
     result = sound1->release();
