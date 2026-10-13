@@ -115,7 +115,7 @@ static inline int vorbis_ftoi(double f) { /* yes, double!  Otherwise,
 }
 #endif
 
-#if defined(_WIN32) && !defined(__GNUC__) && !defined(__BORLANDC__)
+#if defined(_MSC_VER) && !defined(_WIN64) && !defined(_WIN32_WCE) && !defined(_XENON)
 #define VORBIS_FPU_CONTROL
 
 typedef ogg_int16_t vorbis_fpu_control;
@@ -136,6 +136,23 @@ static __inline void vorbis_fpu_restore(vorbis_fpu_control fpu) {
 }
 
 #endif
+
+#if (defined(_MSC_VER) && defined(_WIN64)) || (defined(__GNUC__) && defined(__x86_64__))
+#define VORBIS_FPU_CONTROL
+
+typedef ogg_int16_t vorbis_fpu_control;
+
+#include <emmintrin.h>
+
+static __inline int vorbis_ftoi(double f) {
+    return _mm_cvtsd_si32(_mm_load_sd(&f));
+}
+
+static __inline void vorbis_fpu_setround(vorbis_fpu_control* fpu) {
+}
+
+static __inline void vorbis_fpu_restore(vorbis_fpu_control fpu) {
+}
 
 #ifndef VORBIS_FPU_CONTROL
 
