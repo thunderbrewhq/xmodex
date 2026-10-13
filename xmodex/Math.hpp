@@ -103,7 +103,7 @@ static inline int32_t FMOD_Cart2Angle(int32_t y, int32_t x) {
 
 // Hacks
 
-#define FMOD_ALIGNPOINTER(_ptr, _align) (((reinterpret_cast<FMOD_UINT_NATIVE>(_ptr)) + ((_align) - 1)) & ~((_align) - 1))
+#define FMOD_ALIGNPOINTER(_ptr, _align) ((((FMOD_UINT_NATIVE)(_ptr)) + ((_align) - 1)) & ~((_align) - 1))
 
 #define FMOD_SWAPENDIAN_WORD(_x) (((static_cast<uint16_t>(_x) & 0xFF00) >> 8) | \
                                   ((static_cast<uint16_t>(_x) & 0x00FF) << 8))
