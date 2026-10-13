@@ -138,6 +138,7 @@ static __inline void vorbis_fpu_restore(vorbis_fpu_control fpu) {
 #endif
 
 #if (defined(_MSC_VER) && defined(_WIN64)) || (defined(__GNUC__) && defined(__x86_64__))
+
 #define VORBIS_FPU_CONTROL
 
 typedef ogg_int16_t vorbis_fpu_control;
@@ -153,6 +154,8 @@ static __inline void vorbis_fpu_setround(vorbis_fpu_control* fpu) {
 
 static __inline void vorbis_fpu_restore(vorbis_fpu_control fpu) {
 }
+
+#endif
 
 #ifndef VORBIS_FPU_CONTROL
 
