@@ -14,6 +14,7 @@ if(XMODEX_SYSTEM_LINUX)
     file(GLOB XMODEX_LINUX_SOURCES
         "os/posix/*.cpp"
         "os/linux/*.cpp"
+        "output/bsd/OutputOSS.cpp"
         "output/linux/*.cpp"
     )
     list(APPEND XMODEX_SOURCES ${XMODEX_LINUX_SOURCES})
@@ -26,6 +27,15 @@ if(XMODEX_SYSTEM_MAC)
         "output/mac/*.cpp"
     )
     list(APPEND XMODEX_SOURCES ${XMODEX_MAC_SOURCES})
+endif()
+
+if(XMODEX_SYSTEM_BSD)
+    file(GLOB XMODEX_BSD_SOURCES
+        "os/posix/*.cpp"
+        "os/bsd/*.cpp"
+        "output/bsd/*.cpp"
+    )
+    list(APPEND XMODEX_SOURCES ${XMODEX_BSD_SOURCES})
 endif()
 
 if(XMODEX_SYSTEM_WIN)

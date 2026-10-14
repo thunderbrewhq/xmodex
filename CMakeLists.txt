@@ -7,7 +7,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 # detect which system is being targeted
-if(${CMAKE_SYSTEM_NAME} MATCHES "Windows" OR ${CMAKE_SYSTEM_NAME} MATCHES "MSYS")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(XMODEX_SYSTEM_WIN 1)
     add_definitions(-DXMODEX_SYSTEM_WIN=1)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -16,6 +16,9 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set(XMODEX_SYSTEM_LINUX 1)
     add_definitions(-DXMODEX_SYSTEM_LINUX=1)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
+    set(XMODEX_SYSTEM_BSD 1)
+    add_definitions(-DXMODEX_SYSTEM_BSD=1)
 endif()
 
 # detect CPU features
