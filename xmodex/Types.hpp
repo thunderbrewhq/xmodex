@@ -11,6 +11,12 @@
 
 #define FMOD_alloca _alloca
 
+#elif defined(XMODEX_SYSTEM_BSD)
+
+#include <cstdlib>
+
+#define FMOD_alloca alloca
+
 #else
 
 #include <alloca.h>

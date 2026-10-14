@@ -13,7 +13,7 @@ class Global {
         SystemI* gSystemHead;
         MemPool* gSystemPool;
         int32_t gSystemInitCount;
-#if defined(XMODEX_SYSTEM_MAC) || defined(XMODEX_SYSTEM_LINUX)
+#if defined(XMODEX_SYSTEM_MAC) || defined(XMODEX_SYSTEM_LINUX) || defined(XMODEX_SYSTEM_BSD)
         uint32_t gStartTimeSeconds;
 #endif
         FMOD_UINT64P gDSPClock;
