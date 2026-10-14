@@ -90,6 +90,15 @@ target_link_libraries(fmod
         ogg-1.1.3
 )
 
+# link unix libraries
+
+if(XMODEX_SYSTEM_LINUX OR XMODEX_SYSTEM_BSD)
+    target_link_libraries(fmod
+        PRIVATE
+            pthread
+    )
+endif()
+
 # link windows libraries
 
 if(XMODEX_SYSTEM_WIN)
