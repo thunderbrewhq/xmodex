@@ -15,7 +15,11 @@ void check_result(const char* message, FMOD_RESULT result) {
 }
 
 int main(int argc, char* argv[]) {
+#if defined(_MSC_VER)
+    const char* sound_file = "../../../../../media/boi.wav";
+#else
     const char* sound_file = "../media/boi.wav";
+#endif
     if (argc > 1) {
         sound_file = argv[1];
     }
