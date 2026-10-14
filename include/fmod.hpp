@@ -1233,6 +1233,7 @@ class Channel {
     public:
         FMOD_RESULT F_API stop();
         FMOD_RESULT F_API setPaused(bool paused);
+        FMOD_RESULT F_API getPaused(bool* paused);
         FMOD_RESULT F_API setVolume(float volume);
         FMOD_RESULT F_API getVolume(float* volume);
         FMOD_RESULT F_API setFrequency(float frequency);

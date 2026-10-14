@@ -27,6 +27,18 @@ FMOD_RESULT F_API Channel::setPaused(bool paused) {
     }
 }
 
+FMOD_RESULT F_API Channel::getPaused(bool* paused) {
+    FMOD_RESULT result;
+    ChannelI* channeli;
+
+    result = ChannelI::validate(this, &channeli);
+    if (result != FMOD_OK) {
+        return result;
+    } else {
+        return channeli->getPaused(paused);
+    }
+}
+
 FMOD_RESULT F_API Channel::setVolume(float volume) {
     FMOD_RESULT result;
     ChannelI* channeli;
