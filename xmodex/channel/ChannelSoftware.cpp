@@ -1239,6 +1239,7 @@ FMOD_RESULT ChannelSoftware::getPosition(uint32_t* position, FMOD_TIMEUNIT posty
         auto dspcodec = static_cast<DSPResampler*>(this->mDSPCodec);
 
         channels = dspcodec->mDescription.channels;
+        format = FMOD_SOUND_FORMAT_PCMFLOAT;
         frequency = this->mSound->mDefaultFrequency;
         this->mPosition = dspcodec->mPosition.mHi;
     } else if (this->mSound) {
