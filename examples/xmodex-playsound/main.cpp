@@ -51,12 +51,26 @@ int main(int argc, char* argv[]) {
     check_result("playSound()", result);
 
     bool isplaying = true;
+    uint32_t pos = 0;
+    bool paused = false;
+    bool virt = false;
+    bool mute = false;
+    float vol = 0;
+
     while (isplaying) {
         system->update();
 
         if (channel) {
             channel->isPlaying(&isplaying);
         }
+
+        channel->getPosition(&pos, FMOD_TIMEUNIT_PCM);
+        channel->getPaused(&paused);
+        channel->isVirtual(&virt);
+        channel->getMute(&mute);
+        channel->getVolume(&vol);
+
+        printf("pos=%u paused=%d virtual=%d mute=%d vol=%f\n", pos, paused, virt, mute, vol);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
