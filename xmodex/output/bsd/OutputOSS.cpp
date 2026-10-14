@@ -92,7 +92,7 @@ FMOD_RESULT OutputOSS::enumerate() {
     dirent* ent;
 
     while ((ent = readdir(dir))) {
-        if (!FMOD_strcmp(ent->d_name, "dsp")) {
+        if (!FMOD_strncmp(ent->d_name, "dsp", 3)) {
             bool valid = true;
             for (auto p = ent->d_name + 3; *p; p++) {
                 if (!FMOD_isdigit(static_cast<uint8_t>(*p))) {
