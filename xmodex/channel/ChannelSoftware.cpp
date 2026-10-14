@@ -1474,58 +1474,54 @@ FMOD_RESULT ChannelSoftware::isPlaying(bool* isplaying, bool includethreadlatenc
 
     if (this->mFlags & CHANNELREAL_FLAG_ALLOCATED) {
         *isplaying = true;
-    } else {
-        if (this->mDSPCodec) {
-            this->mDSPCodec->getFinished(isplaying);
-            *isplaying = !*isplaying;
+        return FMOD_OK;
+    }
 
-            if (*isplaying) {
-                return FMOD_OK;
-            }
+    if (this->mDSPCodec) {
+        this->mDSPCodec->getFinished(isplaying);
+        *isplaying = !*isplaying;
+    } else if (this->mDSPCodecStopped && includethreadlatency) {
+        this->mDSPCodecStopped->getFinished(isplaying);
+        *isplaying = !*isplaying;
 
-        } else if (this->mDSPCodecStopped && includethreadlatency) {
-            this->mDSPCodecStopped->getFinished(isplaying);
-            *isplaying = !*isplaying;
-
-            if (*isplaying) {
-                return FMOD_OK;
-            }
-
+        if (!*isplaying) {
             this->mDSPCodecStopped = nullptr;
-        } else if (this->mDSPResampler) {
-            DSPI* input;
-            int32_t numfinished = 0;
-            int32_t numinputs;
-            result = this->mDSPResampler->getNumInputs(&numinputs);
-            if (result == FMOD_OK) {
-                for (int32_t i = 0; i < numinputs; i++) {
-                    result = this->mDSPResampler->getInput(i, &input);
-                    if (result != FMOD_OK) {
-                        break;
-                    }
-
-                    bool finished;
-                    input->getFinished(&finished);
-                    if (finished) {
-                        numfinished++;
-                    }
+        }
+    } else if (this->mDSPResampler) {
+        DSPI* input;
+        int32_t numfinished = 0;
+        int32_t numinputs;
+        result = this->mDSPResampler->getNumInputs(&numinputs);
+        if (result == FMOD_OK) {
+            uint32_t count;
+            for (count = 0; count < numinputs; count++) {
+                result = this->mDSPResampler->getInput(count, &input);
+                if (result != FMOD_OK) {
+                    break;
                 }
 
-                if (numinputs != numfinished) {
-                    *isplaying = true;
-                    return FMOD_OK;
+                bool finished;
+                input->getFinished(&finished);
+                if (finished) {
+                    numfinished++;
                 }
             }
 
-            *isplaying = false;
-        } else if (this->mSound || this->mDSP) {
-            this->mDSPWaveTable->getFinished(isplaying);
-            *isplaying = !*isplaying;
-
-            if (*isplaying) {
-                return FMOD_OK;
+            if (count >= numinputs && numfinished != numinputs) {
+                *isplaying = true;
             }
         }
+
+        *isplaying = false;
+    } else if (this->mSound || this->mDSP) {
+        this->mDSPWaveTable->getFinished(isplaying);
+        *isplaying = !*isplaying;
+    } else {
+        *isplaying = false;
+    }
+
+    if (*isplaying) {
+        return FMOD_OK;
     }
 
     if (this->mDelayEnd) {
