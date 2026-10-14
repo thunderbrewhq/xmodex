@@ -92,29 +92,31 @@ FMOD_RESULT OutputOSS::enumerate() {
     dirent* ent;
 
     while ((ent = readdir(dir))) {
-        bool valid = true;
-        for (auto p = ent->d_name + 3; *p; p++) {
-            if (!FMOD_isdigit(static_cast<uint8_t>(*p))) {
-                valid = false;
-                break;
+        if (!FMOD_strcmp(ent->d_name, "dsp")) {
+            bool valid = true;
+            for (auto p = ent->d_name + 3; *p; p++) {
+                if (!FMOD_isdigit(static_cast<uint8_t>(*p))) {
+                    valid = false;
+                    break;
+                }
             }
-        }
-        if (!valid) {
-            continue;
-        }
+            if (!valid) {
+                continue;
+            }
 
-        this->mDriverNames[this->mNumDrivers] = static_cast<char*>(FMOD_Memory_Calloc(FMOD_strlen(ent->d_name) + 7));
-        if (!this->mDriverNames[this->mNumDrivers]) {
-            return FMOD_ERR_MEMORY;
-        }
+            this->mDriverNames[this->mNumDrivers] = static_cast<char*>(FMOD_Memory_Calloc(FMOD_strlen(ent->d_name) + 7));
+            if (!this->mDriverNames[this->mNumDrivers]) {
+                return FMOD_ERR_MEMORY;
+            }
 
-        sprintf(this->mDriverNames[this->mNumDrivers], "/dev/%s", ent->d_name);
-        if (!FMOD_strcmp(this->mDriverNames[this->mNumDrivers], "/dev/dsp")) {
-            FMOD_strcpy(this->mDriverNames[this->mNumDrivers], this->mDriverNames[0]);
-            FMOD_strcpy(this->mDriverNames[0], "/dev/dsp");
-        }
+            sprintf(this->mDriverNames[this->mNumDrivers], "/dev/%s", ent->d_name);
+            if (!FMOD_strcmp(this->mDriverNames[this->mNumDrivers], "/dev/dsp")) {
+                FMOD_strcpy(this->mDriverNames[this->mNumDrivers], this->mDriverNames[0]);
+                FMOD_strcpy(this->mDriverNames[0], "/dev/dsp");
+            }
 
-        this->mNumDrivers++;
+            this->mNumDrivers++;
+        }
     }
 
     closedir(dir);
