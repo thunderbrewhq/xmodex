@@ -1493,7 +1493,7 @@ FMOD_RESULT ChannelSoftware::isPlaying(bool* isplaying, bool includethreadlatenc
             this->mDSPCodecStopped = nullptr;
         } else if (this->mDSPResampler) {
             DSPI* input;
-            int32_t numfinished;
+            int32_t numfinished = 0;
             int32_t numinputs;
             result = this->mDSPResampler->getNumInputs(&numinputs);
             if (result == FMOD_OK) {
